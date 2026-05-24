@@ -1,6 +1,6 @@
 ---
 name: subtitle-to-text
-description: Convert raw subtitles or transcript text from a video job into one polished transcript.md using AI reading and judgment, especially for Chinese lectures, talks, philosophy videos, and other spoken long-form content. Use when the user asks to clean up subtitles, turn SRT into readable text, organize a transcript, or produce a structured article-like transcript from raw.srt/raw.txt.
+description: Convert raw subtitles or transcript text from a video job into one polished transcript.md using AI reading and judgment, especially for Chinese lectures, talks, philosophy videos, and other spoken long-form content. Supports both single raw.srt/raw.txt jobs and split long-video jobs with parts/raw.part-*.srt or parts/raw.part-*.txt. Use when the user asks to clean up subtitles, turn SRT into readable text, organize a transcript, or produce a structured article-like transcript.
 ---
 
 # Subtitle To Text
@@ -31,14 +31,36 @@ Use the structured article transcript style:
 
 ## Reading Workflow
 
-1. Locate the source, usually `raw.srt`, `raw.txt`, or a user-provided `.srt`.
+1. Locate the source, usually `raw.srt`, `raw.txt`, `parts/raw.part-*.txt`, `parts/raw.part-*.srt`, or a user-provided `.srt`.
 2. Inspect the file size and length. For long files, read it in chunks.
-3. Actually read the subtitle content. Do not generate the transcript by regex, script, or bulk text transformation.
-4. Identify the main turns in the argument and choose section headings.
-5. Write `transcript.md` as a coherent Markdown document.
-6. Re-read the beginning, middle, and end of the output against the source to check that the structure and ending are complete.
+3. If the job is split, read the part files in filename order: `raw.part-001`, `raw.part-002`, and so on.
+4. Actually read the subtitle content. Do not generate the transcript by regex, script, or bulk text transformation.
+5. Identify the main turns in the argument across the whole video, not separately per part.
+6. Write `transcript.md` as one coherent Markdown document.
+7. Re-read the beginning, middle, and end of the output against the source to check that the structure and ending are complete.
 
 Shell commands may be used to view chunks, count lines, or inspect source locations. They must not be used to mechanically produce the final prose.
+
+## Split Jobs
+
+For long videos, the transcription skill may leave separate part files instead of merged subtitles:
+
+```text
+videos/jobs/<slug>/
+  parts/
+    raw.part-001.txt
+    raw.part-002.txt
+    raw.part-003.txt
+```
+
+Treat these as one continuous source:
+
+- Read all parts in numeric filename order.
+- Do not create separate final transcripts per part unless the user asks.
+- Do not preserve artificial part boundaries as headings unless they match real topic boundaries.
+- Smooth transitions across part boundaries when writing `transcript.md`.
+- If overlap causes duplicated sentences at boundaries, remove the duplicate in the final text.
+- If a part is missing or empty, stop and report the missing path instead of silently skipping it.
 
 ## SRT Handling
 
