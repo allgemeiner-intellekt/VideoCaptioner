@@ -13,11 +13,13 @@ videos/tmp/*
 
 !videos/incoming/.gitkeep
 !videos/jobs/.gitkeep
+!videos/jobs/*/
+videos/jobs/*/*
 !videos/exports/.gitkeep
 !videos/tmp/.gitkeep
 !videos/README.md
 
-# Large media and generated transcript artifacts in the video workspace should stay local unless explicitly curated.
+# Large media and generated intermediate artifacts in the video workspace should stay local unless explicitly curated.
 videos/**/*.mp4
 videos/**/*.mov
 videos/**/*.mkv
@@ -29,3 +31,10 @@ videos/**/*.flac
 videos/**/*.srt
 videos/**/*.ass
 videos/**/*.vtt
+
+# Curated per-video job artifacts are small, reviewable, and useful to keep with the private workspace.
+!videos/jobs/*/manifest.json
+!videos/jobs/*/metadata.json
+!videos/jobs/*/transcript.md
+!videos/jobs/*/final.srt
+!videos/jobs/*/final.vtt
