@@ -1,49 +1,31 @@
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.egg-info/
-dist/
-build/
-
-# Virtual environments
+# Runtime environments and caches
 .venv/
-venv/
+**/.venv/
+**/.pytest_cache/
+**/.ruff_cache/
+**/__pycache__/
 
-# IDE
-.idea/
-.vscode/
+# Video service working data
+videos/incoming/*
+videos/jobs/*
+videos/exports/*
+videos/tmp/*
 
-# OS
-.DS_Store
-Thumbs.db
+!videos/incoming/.gitkeep
+!videos/jobs/.gitkeep
+!videos/exports/.gitkeep
+!videos/tmp/.gitkeep
+!videos/README.md
 
-# Environment & secrets
-.env
-*.key
-*.pem
-cookies.txt
-
-# Testing
-.pytest_cache/
-.coverage
-htmlcov/
-
-# Node.js (docs site)
-node_modules/
-docs/.vitepress/cache/
-docs/.vitepress/dist/
-
-# Project-specific
-/resource/bin/
-!/resource/bin/bin_environment.txt
-/AppData/
-/work-dir/
-/*.srt
-/*.mp4
-*.log
-
-# Claude Code
-.claude/
-CLAUDE.md
-videocaptioner/_version.py
+# Large media and generated transcript artifacts in the video workspace should stay local unless explicitly curated.
+videos/**/*.mp4
+videos/**/*.mov
+videos/**/*.mkv
+videos/**/*.avi
+videos/**/*.webm
+videos/**/*.mp3
+videos/**/*.wav
+videos/**/*.flac
+videos/**/*.srt
+videos/**/*.ass
+videos/**/*.vtt
